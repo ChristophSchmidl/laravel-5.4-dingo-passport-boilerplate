@@ -18,7 +18,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 // Create a Dingo Version Group
 $api->version('v1', function ($api) {
-    $api->get('users', function() {
+    $api->get('test', function() {
     	return "Hello World";
     });
 });
