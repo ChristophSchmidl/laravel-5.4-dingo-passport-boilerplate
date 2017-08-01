@@ -21,7 +21,7 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 
 ### How do I use it?
 
-- Copy the repo
+- Clone the repo
 - Copy ```.env.example``` to ```.env``` and alter it to your preferences
 - Run ```composer install```
 - See if it works by visiting ```<APP_URL>/api/test```
