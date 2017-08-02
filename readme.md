@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel 5.4 Dingo Boilerplate
+## About Laravel 5.4 Dingo Passport Boilerplate
 
-This repository serves as a base for implementing RESTful APIs with <a href="https://github.com/laravel/framework">Laravel</a> and <a href="https://github.com/dingo/api">Dingo</a>. The latest release of Dingo, nameley <a href="https://github.com/dingo/api/releases/tag/v1.0.0-beta8">v1.0.0-beta8</a> supports Laravel 5.4. 
+This repository serves as a base for implementing RESTful APIs with <a href="https://github.com/laravel/framework">Laravel</a>, <a href="https://laravel.com/docs/5.4/passport">Laravel Passport</a> and <a href="https://github.com/dingo/api">Dingo</a>. The latest release of Dingo, nameley <a href="https://github.com/dingo/api/releases/tag/v1.0.0-beta8">v1.0.0-beta8</a> supports Laravel 5.4.
 
 ### What has been done so far?
 
