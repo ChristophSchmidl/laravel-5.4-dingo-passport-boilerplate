@@ -19,7 +19,7 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 - [x] Make Dingo Facades available: ```'DingoApi' => Dingo\Api\Facade\API::class```, ```'DingoRoute' => Dingo\Api\Facade\Route::class```
 - [x] Update ```.env.example``` and insert minimum amount of ```API_*``` constants to make Dingo work
 - [x] Install <a href="https://github.com/barryvdh/laravel-cors">CORS Middleware</a>
-- [x] Make CORS available to all routes. You can change that behaviour my updating ```app/Http/Kernel.php``` and put ```\Barryvdh\Cors\HandleCors::class``` into your ```middlewareGroups``` instead of ```middleware```
+- [x] Make CORS available to all routes. You can change that behaviour by updating ```app/Http/Kernel.php``` and put ```\Barryvdh\Cors\HandleCors::class``` into your ```middlewareGroups``` instead of ```middleware```
 - [x] Make CORS configuration available as ```config/cors.php```
 
 ### How do I use it?
