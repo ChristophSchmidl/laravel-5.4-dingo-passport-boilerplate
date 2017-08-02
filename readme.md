@@ -21,6 +21,15 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 - [x] Install <a href="https://github.com/barryvdh/laravel-cors">CORS Middleware</a>
 - [x] Make CORS available to all routes. You can change that behaviour by updating ```app/Http/Kernel.php``` and put ```\Barryvdh\Cors\HandleCors::class``` into your ```middlewareGroups``` instead of ```middleware```
 - [x] Make CORS configuration available as ```config/cors.php```
+- [x] Moved the User-model into namespace ```App\Models``` and adjusted all config files so everything works as before.
+- [x] Install Passport via ``composer require laravel/passport```
+- [x] Register ```PassportServiceProvider``` by adding ```Laravel\Passport\PassportServiceProvider::class``` to the ```providers`` array of ```config/app.php```
+- [x] In order to see which migration files Passport is actually using, ```Passport::ignoreMigrations()``` has been put into the ```register```method of ```AppServiceProvider```. Running ```php artisan vendor:publish --tag=passport-migrations``` puts the default Passport migrations into ```database/migrations``` folder.
+- [x] Run ```php artisan passport:install``` This command will create the encryption keys needed to generate secure access tokens. In addition, the command will create "personal access" and "password grant" clients which will be used to generate access tokens.
+- [x] Added ```Laravel\Passport\HasApiTokens``` to ```App\Models\User```
+- [x] In order to get some default routes by Passport, ```Pasport::routes``` method has been put into the ```boot``` method of ```AuthServiceProvider```. You can delete this method and create your own routes if you wish to do so.
+- [x] In the ```config/auth.php``` configuration file, the driver option of the api authentication guard to has been set to ``passport``. This will instruct your application to use Passport's TokenGuard when authenticating incomng API requests.
+- [x] Added custom ```DingoPassportServiceProvider```
 
 ### How do I use it?
 

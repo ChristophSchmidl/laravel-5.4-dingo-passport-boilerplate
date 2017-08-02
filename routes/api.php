@@ -23,12 +23,12 @@ $api->version('v1', function ($api) {
     	return "Hello World";
     });
 
-    $api->post("login", 'App\Http\Controllers\Api\V1\AuthController@issuePersonalAccessToken');
+    $api->post("login", 'App\Http\Controllers\Api\V1\Auth\LoginController@login');
 
     // Protected routes
     $api->group(['middleware' => 'auth:api'], function ($api) {
-        $api->get('profile', 'App\Http\Controllers\Api\V1\AuthController@profile');
-        $api->get('logout', 'App\Http\Controllers\Api\V1\AuthController@deletePersonalAccessToken');
+        $api->get('profile', 'App\Http\Controllers\Api\V1\ProfileController@show');
+        $api->get('logout', 'App\Http\Controllers\Api\V1\Auth\LoginController@logout');
     });
 
 });
