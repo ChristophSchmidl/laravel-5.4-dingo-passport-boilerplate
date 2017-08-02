@@ -169,7 +169,7 @@ return [
     */
 
     'auth' => [
-
+        'dingo_passport' => \App\Providers\DingoPassportServiceProvider::class
     ],
 
     /*

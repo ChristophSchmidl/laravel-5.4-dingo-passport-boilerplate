@@ -18,14 +18,23 @@ $api = app('Dingo\Api\Routing\Router');
 
 // Create a Dingo Version Group
 $api->version('v1', function ($api) {
+
     $api->get('test', function() {
     	return "Hello World";
     });
+
+    $api->post("login", 'App\Http\Controllers\Api\V1\AuthController@issuePersonalAccessToken');
+
+    // Protected routes
+    $api->group(['middleware' => 'auth:api'], function ($api) {
+        $api->get('profile', 'App\Http\Controllers\Api\V1\AuthController@profile');
+        $api->get('logout', 'App\Http\Controllers\Api\V1\AuthController@deletePersonalAccessToken');
+    });
+
 });
 
 // Laravel's native API thingy
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 
