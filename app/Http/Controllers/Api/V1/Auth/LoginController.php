@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Api\V1\DingoController;
+use App\Http\Transformers\NullObjectTransformer;
+use App\Http\Transformers\PersonalAccessTokenResultTransformer;
+use App\Models\NullObject;
 use App\Models\User;
 use Dingo\Api\Http\Response;
 use Illuminate\Http\Request;
@@ -75,14 +78,21 @@ class LoginController extends DingoController
     {
         $inputs = $request->all();
         $user = User::where($this->username(), $inputs[$this->username()])->firstOrFail();
-        $token = $user->createToken('Personal Access Token')->accessToken;
+        $token = $user->createToken('Personal Access Token');
 
-        $this->createOkResponse(null, [
+        $meta = array(
             'status_code' => 200,
             'status_text' => "OK",
             'message' => trans("auth.login.success"),
-            'personal_access_token' => $token
-        ])->send();
+        );
+
+        $response = $this->response->item($token, new PersonalAccessTokenResultTransformer())
+            ->setStatusCode(200)
+            ->setMeta($meta);
+
+        // Use this method instead of send(). It also saves you from weird
+        // assertJsonStructure errors
+        $response->throwResponse();
     }
 
     /**
@@ -133,10 +143,18 @@ class LoginController extends DingoController
         $request->user()->token()->revoke();
         $request->user()->token()->delete();
 
-        $this->createOkResponse(null, [
+        $meta = array(
             'status_code' => 200,
             'status_text' => "OK",
-            'message' => trans("auth.logout.success")
-        ])->send();
+            'message' => trans("auth.logout.success"),
+        );
+
+        $response = $this->response->item(new NullObject(), new NullObjectTransformer())
+            ->setStatusCode(200)
+            ->setMeta($meta);
+
+        // Use this method instead of send(). It also saves you from weird
+        // assertJsonStructure errors
+        $response->throwResponse();
     }
 }

@@ -27,15 +27,9 @@ class DingoController extends Controller
         throw new ValidationHttpException($validator->getMessageBag()->toArray());
     }
 
-    protected function createOkResponse($location, $content)
-    {
-        $response = new Response($content);
-        $response->setStatusCode(200);
-
-        if (! is_null($location)) {
-            $response->header('Location', $location);
+    protected function validateByValidator(Request $request, $validator) {
+        if ($validator->fails()){
+            $this->throwValidationException($request, $validator);
         }
-
-        return $response;
     }
 }

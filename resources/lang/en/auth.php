@@ -21,6 +21,10 @@ return [
         'failed' => 'Something went wrong during the logout procedure.',
         'success' => 'You have been logged out successfully.'
     ],
+    'register' => [
+        'failed' => "Something went wrong during the registration procedure.",
+        'success' => "You have been registered successfully."
+    ],
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
