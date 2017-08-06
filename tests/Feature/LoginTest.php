@@ -58,6 +58,8 @@ class LoginTest extends TestCase
 
         $response = $this->json('post', '/api/login', $payload);
 
+        $response->dump();
+
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 'access_token',

@@ -11,6 +11,18 @@
 
 This repository serves as a base for implementing RESTful APIs with <a href="https://github.com/laravel/framework">Laravel</a>, <a href="https://laravel.com/docs/5.4/passport">Laravel Passport</a> and <a href="https://github.com/dingo/api">Dingo</a>. The latest release of Dingo, nameley <a href="https://github.com/dingo/api/releases/tag/v1.0.0-beta8">v1.0.0-beta8</a> supports Laravel 5.4.
 
+### Laravel Passport - Notes
+
+* In order to see which migration files Passport is actually using, ```Passport::ignoreMigrations()``` has been put into the ```register```method of ```AppServiceProvider```. Running ```php artisan vendor:publish --tag=passport-migrations``` puts the default Passport migrations into ```database/migrations``` folder.
+* ```create_oauth_auth_codes_table.php```
+* ```create_oauth_access_tokens_table.php```
+* ```create_oauth_refresh_tokens_table.php```
+* ```create_oauth_clients_table.php```
+* ```create_oauth_personal_access_clients_table.php```
+
+
+
+
 ### What has been done so far?
 
 - [x] Install the latest Dingo version (v1.0.0-beta8) which is compatible with Laravel 5.4
@@ -36,4 +48,3 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 - Clone the repo
 - Copy ```.env.example``` to ```.env``` and alter it to your preferences
 - Run ```composer install```
-- See if it works by visiting ```<APP_URL>/api/test```
