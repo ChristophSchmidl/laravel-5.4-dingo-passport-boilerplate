@@ -26,7 +26,6 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
             $table->dateTime('expires_at')->nullable();
         });
 		```
-	* Purpose: test
 	* Associated Model: ```Laravel\Passport\AuthCode```
 		* Methods:
 			```
@@ -52,7 +51,6 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
             $table->dateTime('expires_at')->nullable();
         });
 		```
-	* Purpose: test
     * Associated Model: ```Laravel\Passport\Token```
         * Methods:
             ```
@@ -111,7 +109,6 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
             $table->dateTime('expires_at')->nullable();
         });
 		```
-	* Purpose: test
     * Associated Model: Has no real associated Eloquent Model but is used by ```Laravel\Passport\Bridge\RefreshTokenRepository```
         * Methods:
             ```
@@ -151,7 +148,6 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
             $table->timestamps();
         });
 		```
-	* Purpose: test
     * Associated Model: ```Laravel\Passport\Client```
         * Methods:
             ```
@@ -186,7 +182,6 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
             $table->timestamps();
         });
 		```
-	* Purpose: test
     * Associated Model: ```Laravel\Passport\PersonalAccessClient```
         * Methods:
             ```
