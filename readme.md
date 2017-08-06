@@ -27,10 +27,62 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
         });
 		```
 	* Purpose: test
-	* Associated Model: test
+	* Associated Model: ```Laravel\Passport\AuthCode```
+		```
+		<?php
 
-* ```create_oauth_access_tokens_table.php```
-	* Structure:
+        namespace Laravel\Passport;
+
+        use Illuminate\Database\Eloquent\Model;
+
+        class AuthCode extends Model
+        {
+            /**
+             * The database table used by the model.
+             *
+             * @var string
+             */
+            protected $table = 'oauth_auth_codes';
+
+            /**
+             * The guarded attributes on the model.
+             *
+             * @var array
+             */
+            protected $guarded = [];
+
+            /**
+             * The attributes that should be cast to native types.
+             *
+             * @var array
+             */
+            protected $casts = [
+                'revoked' => 'bool',
+            ];
+
+            /**
+             * The attributes that should be mutated to dates.
+             *
+             * @var array
+             */
+            protected $dates = [
+                'expires_at',
+            ];
+
+            /**
+             * Get the client that owns the authentication code.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\HasMany
+             */
+            public function client()
+            {
+                return $this->hasMany(Client::class);
+            }
+        }
+		```
+
+* ```createoauth_access_tokens_table.php```
+	* Structure
 		```
         Schema::create('oauth_access_tokens', function (Blueprint $table) {
             $table->string('id', 100)->primary();
