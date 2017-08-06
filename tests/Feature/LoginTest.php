@@ -5,12 +5,20 @@ namespace Tests\Feature;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Laravel\Passport\Token;
+use Laravel\Passport\TokenRepository;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class LoginTest extends TestCase
 {
-    use DatabaseTransactions;
+
+    protected $tokenRepository;
+
+    public function setUp() {
+
+        parent::setUp();
+
+        $this->tokenRepository = $this->app->make(TokenRepository::class);
+    }
 
 
     /**
@@ -58,11 +66,18 @@ class LoginTest extends TestCase
 
         $response = $this->json('post', '/api/login', $payload);
 
-        $response->dump();
+        //$response->dump();
 
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 'access_token',
+                'user' => [
+                    'id',
+                    'name',
+                    'email',
+                    'created_at',
+                    'updated_at'
+                ]
             ],
             'meta' => [
                 'status_code',
@@ -97,10 +112,11 @@ class LoginTest extends TestCase
         $this->assertInternalType("string", $accessToken);
 
         $headers = [
+            'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $accessToken,
         ];
 
-        $this->assertTrue($this->tokenExistsForUser($token->id, $user->id));
+        $this->assertNotNull($this->tokenRepository->findForUser($token->id, $user->id));
 
 
         $response = $this->json('get', '/api/logout', [], $headers);
@@ -126,7 +142,7 @@ class LoginTest extends TestCase
             ]
         ]);
 
-        $this->assertFalse($this->tokenExistsForUser($token->id, $user->id));
+        $this->assertNull($this->tokenRepository->findForUser($token->id, $user->id));
     }
 
 
@@ -155,8 +171,7 @@ class LoginTest extends TestCase
             'Authorization' => 'Bearer ' . "wrong",
         ];
 
-        $this->assertTrue($this->tokenExistsForUser($token->id, $user->id));
-
+        $this->assertNotNull($this->tokenRepository->findForUser($token->id, $user->id));
 
         $response = $this->json('get', '/api/logout', [], $headers);
 
@@ -169,22 +184,6 @@ class LoginTest extends TestCase
             'status_code' => 401,
         ]);
 
-        $this->assertTrue($this->tokenExistsForUser($token->id, $user->id));
-    }
-
-
-    private function tokenExistsForUser($tokenId, $userId)
-    {
-        $tokenFromDB = Token::find($tokenId);
-
-        if($tokenFromDB) {
-            $userFromToken = $tokenFromDB->user()->first();
-
-            if($userFromToken) {
-                if($userFromToken->id == $userId) return true;
-            }
-            return false;
-        }
-        return false;
+        $this->assertNotNull($this->tokenRepository->findForUser($token->id, $user->id));
     }
 }
