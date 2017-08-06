@@ -28,7 +28,7 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 		```
 	* Purpose: test
 	* Associated Model: ```Laravel\Passport\AuthCode```
-		* Methods
+		* Methods:
 			```
 		    /**
 		     * Get the client that owns the authentication code.
@@ -38,7 +38,7 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
 		    public function client();
 			```
 
-* ```createoauth_access_tokens_table.php```
+* ```create_oauth_access_tokens_table.php```
 	* Structure:
 		```
         Schema::create('oauth_access_tokens', function (Blueprint $table) {
@@ -53,7 +53,53 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
         });
 		```
 	* Purpose: test
-    * Associated Model: test
+    * Associated Model: ```Laravel\Passport\Token```
+        * Methods:
+            ```
+            /**
+             * Get the client that the token belongs to.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+             */
+            public function client();
+
+            /**
+             * Get the user that the token belongs to.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+             */
+            public function user();
+
+            /**
+             * Determine if the token has a given scope.
+             *
+             * @param  string  $scope
+             * @return bool
+             */
+            public function can($scope);
+
+            /**
+             * Determine if the token is missing a given scope.
+             *
+             * @param  string  $scope
+             * @return bool
+             */
+            public function cant($scope);
+
+            /**
+             * Revoke the token instance.
+             *
+             * @return void
+             */
+            public function revoke();
+
+            /**
+             * Determine if the token is a transient JWT token.
+             *
+             * @return bool
+             */
+            public function transient();
+            ```
 
 * ```create_oauth_refresh_tokens_table.php```
 	* Structure:
