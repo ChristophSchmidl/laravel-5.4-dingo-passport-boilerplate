@@ -168,7 +168,35 @@ class PersonalAccessTokenControllerTest extends TestCase
      */
     public function revoke_given_token_successfully()
     {
-        $this->assertTrue(false);
+        $user = User::create([
+            "name" => "John Doe",
+            "email" => "john@example.com",
+            "password" => bcrypt("test1337")
+        ]);
+
+        $personalAccessTokenResult = $user->createToken("Personal Access Token");
+        $accessToken = $personalAccessTokenResult->accessToken; // @type string
+        $token = $personalAccessTokenResult->token; // @type \Laravel\Passport\Token
+
+        $user->withAccessToken($token);
+
+        $this->assertInternalType("string", $accessToken);
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $accessToken,
+        ];
+
+        $tokenFromDB = $this->tokenRepository->findForUser($token->id, $user->id);
+        $this->assertNotNull($tokenFromDB);
+
+        $this->assertFalse($this->tokenRepository->isAccessTokenRevoked($tokenFromDB->id));
+
+        $response = $this->json('delete', 'oauth/personal-access-tokens/' . $tokenFromDB->id, [], $headers);
+
+        $response->assertStatus(200);
+
+        $this->assertTrue($this->tokenRepository->isAccessTokenRevoked($tokenFromDB->id));
     }
 
 }
