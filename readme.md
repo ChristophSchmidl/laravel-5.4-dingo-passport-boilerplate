@@ -112,7 +112,29 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
         });
 		```
 	* Purpose: test
-    * Associated Model: test
+    * Associated Model: Has no real associated Eloquent Model but is used by ```Laravel\Passport\Bridge\RefreshTokenRepository```
+        * Methods:
+            ```
+            /**
+             * {@inheritdoc}
+             */
+            public function getNewRefreshToken();
+
+            /**
+             * {@inheritdoc}
+             */
+            public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity);
+
+            /**
+             * {@inheritdoc}
+             */
+            public function revokeRefreshToken($tokenId);
+
+            /**
+             * {@inheritdoc}
+             */
+            public function isRefreshTokenRevoked($tokenId);
+            ```
 
 * ```create_oauth_clients_table.php```
 	* Structure:
@@ -130,7 +152,30 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
         });
 		```
 	* Purpose: test
-    * Associated Model: test
+    * Associated Model: ```Laravel\Passport\Client```
+        * Methods:
+            ```
+            /**
+             * Get all of the authentication codes for the client.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\HasMany
+             */
+            public function authCodes();
+
+            /**
+             * Get all of the tokens that belong to the client.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\HasMany
+             */
+            public function tokens();
+
+            /**
+             * Determine if the client is a "first party" client.
+             *
+             * @return bool
+             */
+            public function firstParty();
+            ```
 
 * ```create_oauth_personal_access_clients_table.php```
 	* Structure:
@@ -142,7 +187,16 @@ This repository serves as a base for implementing RESTful APIs with <a href="htt
         });
 		```
 	* Purpose: test
-    * Associated Model: test
+    * Associated Model: ```Laravel\Passport\PersonalAccessClient```
+        * Methods:
+            ```
+            /**
+             * Get all of the authentication codes for the client.
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+             */
+            public function client();
+            ```
 
 
 
